@@ -6,20 +6,29 @@
 //
 
 import UIKit
+import Combine
 
 class ListViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
     private let viewModel = NewsViewModel()
+    //MARK: - Using Combine framwork
+    private let combineViewModel = CombineNewsListViewModel()
+    private var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "News Explorer"
         setupTableView()
-        bindViewModel()
-        viewModel.fetchArticles()
+        //MARK: - Using completion
+        //bindViewModel()
+        //viewModel.fetchArticles()
+        
+        //MARK: - Using Combine framwork
+        CombineViewModel()
+        combineViewModel.fetchArticles()
     }
 
     private func setupTableView() {
@@ -29,6 +38,7 @@ class ListViewController: UIViewController {
         newsTableView.register(nib, forCellReuseIdentifier: "NewsTableViewCell")
     }
     
+    //MARK: - Using completion
     private func bindViewModel() {
         viewModel.onUpdate = { [weak self] in
             self?.newsTableView.reloadData()
@@ -40,16 +50,30 @@ class ListViewController: UIViewController {
             self?.present(alert, animated: true)
         }
     }
+    
+    //MARK: - Using Combine framwork
+    private func CombineViewModel() {
+        combineViewModel.$articles
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.newsTableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
 }
 
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.articles.count
+        //return viewModel.articles.count
+        //MARK: - Using Combine framwork
+        return combineViewModel.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
-        cell.configureUI(with: viewModel.articles[indexPath.row])
+        //cell.configureUI(with: viewModel.articles[indexPath.row])
+        //MARK: - Using Combine framwork
+        cell.configureUI(with: combineViewModel.articles[indexPath.row])
         return cell
     }
 }

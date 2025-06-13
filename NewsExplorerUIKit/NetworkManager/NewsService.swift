@@ -5,6 +5,7 @@
 //  Created by Rafiul Hasan on 6/13/25.
 //
 
+import Combine
 import Foundation
 
 enum NetworkError: Error {
@@ -19,7 +20,7 @@ protocol NewsServiceProtocol {
 
 final class NewsService: NewsServiceProtocol {
     func fetchArticles(completion: @escaping (Result<[Article], Error>) -> Void) {
-        guard let url = URL(string: "https://newsapi.org/v2/everything?q=apple&from=2025-06-10&sortBy=publishedAt&apiKey=abf87ad1f7714eaab23219ba55cf199f") else {
+        guard let url = URL(string: AppConstant.urlString ) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -41,5 +42,22 @@ final class NewsService: NewsServiceProtocol {
                 completion(.failure(error))
             }
         }.resume()
+    }
+}
+
+//MARK: - using Combine framework
+protocol CombineNewsServiceProtocol {
+    func fetchArticles() -> AnyPublisher<[Article], Error>
+}
+
+class CombineNewsAPIService: CombineNewsServiceProtocol {
+    func fetchArticles() -> AnyPublisher<[Article], Error> {
+        let url = URL(string: AppConstant.urlString)!
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: NewsResponse.self, decoder: JSONDecoder())
+            .map(\.articles)
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 }
