@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B1B386282DFC4886006F1108 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B1B386272DFC4886006F1108 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B1B385682DFC40BF006F1108 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19,6 +23,7 @@
 /* Begin PBXFileReference section */
 		B1B383CA2DFC249E006F1108 /* NewsExplorerUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsExplorerUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B385642DFC40BF006F1108 /* NewsExplorerUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsExplorerUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1B386272DFC4886006F1108 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -68,6 +73,7 @@
 		B1B383C12DFC249E006F1108 = {
 			isa = PBXGroup;
 			children = (
+				B1B386272DFC4886006F1108 /* README.md */,
 				B1B383CC2DFC249E006F1108 /* NewsExplorerUIKit */,
 				B1B385652DFC40BF006F1108 /* NewsExplorerUIKitTests */,
 				B1B383CB2DFC249E006F1108 /* Products */,
@@ -175,6 +181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1B386282DFC4886006F1108 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
