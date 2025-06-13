@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case invalidURL
+    case urlSessionFailed
+    case noData
+}
+
 protocol NewsServiceProtocol {
     func fetchArticles(completion: @escaping (Result<[Article], Error>) -> Void)
 }
@@ -14,8 +20,9 @@ protocol NewsServiceProtocol {
 final class NewsService: NewsServiceProtocol {
     func fetchArticles(completion: @escaping (Result<[Article], Error>) -> Void) {
         guard let url = URL(string: "https://newsapi.org/v2/everything?q=apple&from=2025-06-10&sortBy=publishedAt&apiKey=abf87ad1f7714eaab23219ba55cf199f") else {
-            //completion(.failure(NetworkError.invalidURL))
-            return }
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
@@ -23,7 +30,7 @@ final class NewsService: NewsServiceProtocol {
             }
             
             guard let data = data else {
-                //completion(.failure(NetworkError.noData))
+                completion(.failure(NetworkError.noData))
                 return
             }
             

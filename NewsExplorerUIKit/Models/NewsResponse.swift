@@ -16,7 +16,8 @@ struct NewsResponse: Codable {
 
 // MARK: - Article
 struct Article: Codable {
-    var title, description: String
+    var title: String
+    var description: String
     var urlToImage: String?
     var publishedAt: String
     var content: String
