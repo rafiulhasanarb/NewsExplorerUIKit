@@ -52,7 +52,7 @@ protocol CombineNewsServiceProtocol {
 
 class CombineNewsAPIService: CombineNewsServiceProtocol {
     func fetchArticles() -> AnyPublisher<[Article], Error> {
-        let url = URL(string: AppConstant.urlString)!
+        let url = URL(string: ConfigurationManager.shared.baseURL)!
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: NewsResponse.self, decoder: JSONDecoder())
