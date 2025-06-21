@@ -55,6 +55,7 @@ class CombineNewsListViewModel {
                 }
             }, receiveValue: { articles in
                 self.articles = articles
+                print("articles: \(self.articles)")
             })
             .store(in: &cancellables)
     }

@@ -11,6 +11,7 @@ import Combine
 class ListViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
+    @IBOutlet weak var searchByAuthorTF: UISearchBar!
     
     private let viewModel = NewsViewModel()
     //MARK: - Using Combine framwork
@@ -21,6 +22,7 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "News Explorer"
+        searchByAuthorTF.heightAnchor.constraint(equalToConstant: 44).isActive = true
         setupTableView()
         //MARK: - Using completion
         //bindViewModel()
