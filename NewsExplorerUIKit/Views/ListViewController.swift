@@ -8,11 +8,12 @@
 import UIKit
 import Combine
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, CoordinatorBoard {
 
     @IBOutlet weak var newsTableView: UITableView!
     @IBOutlet weak var searchByAuthorTF: UISearchBar!
     
+    weak var coordinator: NewsCoordinator?
     private let viewModel = NewsViewModel()
     //MARK: - Using Combine framwork
     private let combineViewModel = CombineNewsListViewModel()

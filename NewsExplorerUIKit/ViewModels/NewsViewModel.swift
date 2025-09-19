@@ -55,8 +55,20 @@ class CombineNewsListViewModel {
                 }
             }, receiveValue: { articles in
                 self.articles = articles
-                print("articles: \(self.articles)")
+                // print("articles: \(self.articles)")
             })
             .store(in: &cancellables)
+    }
+    
+    // MARK: - Search Method
+    func searchArticles(in articles: [Article], for query: String) -> [Article] {
+        let lowercasedQuery = query.lowercased()
+        
+        return articles.filter { article in
+            return (article.author?.lowercased().contains(lowercasedQuery) ?? false) ||
+            article.title.lowercased().contains(lowercasedQuery) ||
+            article.description.lowercased().contains(lowercasedQuery) ||
+            article.content.lowercased().contains(lowercasedQuery)
+        }
     }
 }
